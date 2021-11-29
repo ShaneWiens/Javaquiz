@@ -21,7 +21,7 @@ var questionActive = [
         correctAnswer: "alerts"
     },
     {
-        question: "Document.queryselector('#data') would wfind hat element(s)?",
+        question: "Document.queryselector('#data') would find what element(s)?",
         answers: ["First element with id = 'data'", "all elements with class = 'data'", "Last element with class 'data'", "all elements with class= 'data'"],
         correctAnswer: "First element with id = 'data'",
     },
@@ -54,17 +54,17 @@ function displayTime() {
 
         if (timeLeft < 1) {
             clearInterval(timerInterval);
-            // endGame();
+            endGame();
         }
 
     }, 1000);
     askFirstQuestion()
 };
-var questionIndex = 0;
 
 function askFirstQuestion() {
+    var questionIndex = 0;
     currentQuestionEl.textContent = questionActive[questionIndex].question;
-    questionActive[questionIndex].answers.forEach(function (answers, i) {
+    questionActive[questionIndex].answers.forEach(function (answers) {
 
         var answersBtns = document.createElement('button');
         answersBtns.setAttribute('class', 'answerBtn');
@@ -74,6 +74,7 @@ function askFirstQuestion() {
         answersBtns.onclick = answerClick;
 
         currentAnswersEl.append(answersBtns);
+
     })
 
     //for (i = 0, i < questionActive[0].Answers.length; i++;){
@@ -86,35 +87,71 @@ function askFirstQuestion() {
 
     // currentAnswersEl.append(answersBtns);
     //}
-}
+    function answerClick(event) {
 
+        console.log(this.value)
+        var userAwnser = event.target.value;
 
-function answerClick(event) {
-    console.log(this.value)
-    var userAwnser = event.target.value;
+        if (userAwnser === questionActive[questionIndex].correctAnswer) {
+            currentScore = currentScore + 2;
+            currentScoreEl.textContent = "Current score: " + currentScore;
+        }
+        else {
+            timeLeft = timeLeft - 2;
+            timeEl.textContent = timeLeft + "s remaining";
+        }
+        console.log(userAwnser)
+        console.log(questionActive[questionIndex].correctAnswer)
+        console.log(currentScore)
+        if (questionIndex > 4) {
+            currentScore = currentScore + timeLeft;
+            clearInterval(timerInterval);
+            endGame();
+        }
+        else {
+            askNextQuestion();
+            function askNextQuestion() {
 
-    if (userAwnser === questionActive[questionIndex].correctAnswer) {
-        currentScore = currentScore + 2;
-        currentScoreEl.textContent = "Current score: " + currentScore;
+                function removeAnswers(currentAnswersEl) {
+                    while (currentAnswersEl.firstChild) {
+                        currentAnswersEl.removeChild(currentAnswersEl.firstChild);
+                    }
+                }
+                const lastAnswers = document.querySelector("#answers");
+                removeAnswers(lastAnswers)
+                questionIndex++;
+                // currentQuestionEl.textContent = questionActive[questionIndex].question;
+                // for (i = 0, i < questionActive[questionIndex].answers.length; i++;) {
+                //     var placeHolder = document.getElementById("answers").child[i];
+                //     placeHolder.setAttribute('class', 'answerBtn');
+                //     placeHolder.setAttribute('value', questionActive[questionIndex].answers[i]);
+                //     placeHolder.textContent = questionActive[questionIndex].answers[i];
+                // }
+                currentQuestionEl.textContent = questionActive[questionIndex].question;
+                questionActive[questionIndex].answers.forEach(function (answers) {
+
+                    var nextAnswersBtns = document.createElement('button');
+                    nextAnswersBtns.setAttribute('class', 'answerBtn');
+                    nextAnswersBtns.setAttribute('value', answers);
+                    nextAnswersBtns.textContent = answers;
+
+                    nextAnswersBtns.onclick = answerClick;
+
+                    currentAnswersEl.append(nextAnswersBtns);
+                })
+            }
+        }
+
     }
-    else {
-        timeLeft = timeLeft - 2;
-        timeEl.textContent = timeLeft + "s remaining";
-    }
-    console.log(userAwnser)
-    console.log(questionActive[questionIndex].correctAnswer)
-    console.log(currentScore)
 }
 
-function askNextQuestion() {
-    questionIndex++;
-    currentQuestionEl.textContent = questionActive[questionIndex].question;
-    currentAnswersEl.
-    
-    
-}
+
+
+
+
 function endGame() {
     alert("Game Over")
+    
 }
 
 
