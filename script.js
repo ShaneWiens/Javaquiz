@@ -17,28 +17,28 @@ var currentScoreEl = document.querySelector("#playerScore")
 var questionActive = [
     {
         question: "Which of these is not a valid data type?",
-        answersBtns: ["booleans", "alerts", "numbers", "strings"],
-        answer: "alerts"
+        answers: ["booleans", "alerts", "numbers", "strings"],
+        correctAnswer: "alerts"
     },
     {
         question: "Document.queryselector('#data') would wfind hat element(s)?",
-        answersBtns: ["First element with id = 'data'", "all elements with class = 'data'", "Last element with class 'data'", "all elements with class= 'data'"],
-        answer: "First element with id = 'data'",
+        answers: ["First element with id = 'data'", "all elements with class = 'data'", "Last element with class 'data'", "all elements with class= 'data'"],
+        correctAnswer: "First element with id = 'data'",
     },
     {
         question: "To combine arrays we use which command?",
-        answersBtns: [".addtolist", ".concat", ".combine", ".uniteArray"],
-        answer: ".concat",
+        answers: [".addtolist", ".concat", ".combine", ".uniteArray"],
+        correctAnswer: ".concat",
     },
     {
         question: "Which of these dictates strict equality?",
-        answersBtns: ["===", "!==", "==", ">=="],
-        answer: "==="
+        answers: ["===", "!==", "==", ">=="],
+        correctAnswer: "==="
     },
     {
         question: "Which of these is not a way to interact with the user using Javascript?",
-        answersBtns: ["prompts", "alerts", "confirms", "console log"],
-        answer: "console log"
+        answers: ["prompts", "alerts", "confirms", "console log"],
+        correctAnswer: "console log"
     },
 ];
 
@@ -52,45 +52,70 @@ function displayTime() {
         timeLeft--;
         timeEl.textContent = timeLeft + "s remaining";
 
-        // if (timeLeft === 0) {
-        //     clearInterval(timerInterval);
-        //     alert("game over");
-        // }
+        if (timeLeft < 1) {
+            clearInterval(timerInterval);
+            // endGame();
+        }
 
     }, 1000);
-    askQuestions()
+    askFirstQuestion()
 };
+var questionIndex = 0;
 
-function askQuestions() {
-    currentQuestionEl.textContent = questionActive[i].question;
+function askFirstQuestion() {
+    currentQuestionEl.textContent = questionActive[questionIndex].question;
+    questionActive[questionIndex].answers.forEach(function (answers, i) {
 
-    questionActive[i].answer.forEach(function(answer, i){
-    
-        var answersBtns= document.createElement('button');
+        var answersBtns = document.createElement('button');
         answersBtns.setAttribute('class', 'answerBtn');
-        answersBtns.setAttribute('value', answer);
-        answersBtns.textContent = answer;
+        answersBtns.setAttribute('value', answers);
+        answersBtns.textContent = answers;
 
         answersBtns.onclick = answerClick;
 
         currentAnswersEl.append(answersBtns);
-    });
+    })
 
     //for (i = 0, i < questionActive[0].Answers.length; i++;){
-        
-        // var answersBtns= document.createElement('button');
-        // answersBtns.setAttribute('class', 'answerBtn');
-        // answersBtns.setAttribute('value', questionActive[0].Answers[i]);
 
-        // answersBtns.textContent = questionActive[0].Answers[i];
+    // var answersBtns= document.createElement('button');
+    // answersBtns.setAttribute('class', 'answerBtn');
+    // answersBtns.setAttribute('value', questionActive[0].Answers[i]);
 
-        // currentAnswersEl.append(answersBtns);
+    // answersBtns.textContent = questionActive[0].Answers[i];
+
+    // currentAnswersEl.append(answersBtns);
     //}
-    currentAnswersEl.textContent
 }
 
-function answerClick(){
+
+function answerClick(event) {
     console.log(this.value)
+    var userAwnser = event.target.value;
+
+    if (userAwnser === questionActive[questionIndex].correctAnswer) {
+        currentScore = currentScore + 2;
+        currentScoreEl.textContent = "Current score: " + currentScore;
+    }
+    else {
+        timeLeft = timeLeft - 2;
+        timeEl.textContent = timeLeft + "s remaining";
+    }
+    console.log(userAwnser)
+    console.log(questionActive[questionIndex].correctAnswer)
+    console.log(currentScore)
 }
+
+function askNextQuestion() {
+    questionIndex++;
+    currentQuestionEl.textContent = questionActive[questionIndex].question;
+    currentAnswersEl.
+    
+    
+}
+function endGame() {
+    alert("Game Over")
+}
+
 
 buttonEl.addEventListener("click", displayTime);
