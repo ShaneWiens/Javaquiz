@@ -22,7 +22,18 @@
 
             </div>
         </div>
-        <div class="scoreboard hide" id="hi-scores"> ScoreBoard</div>
+        <div class="highscores hide" id="finalUserScores">
+            <h1>Game Over</h1>
+            <p>Your Final Score: <span id="finalScore"></span></p>
+            <p>Enter your initials: <input type="text" id="initials" /> <button id="submit">Submit</button></p>
+        </div>
+        <div class="scoreboard hide" id="hi-scores"> 
+            <h1>Hi-Scores</h1>
+            <ol id="scoresList"></ol>
+
+            <button id="restart">Play Again</button>
+        </div>
+        <div id="topScores" class="hide"></div>
     </div>
     <script src="script.js"></script>
 </body>
