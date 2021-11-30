@@ -95,7 +95,7 @@ function answerClick() {
         currentScoreEl.textContent = "Current score: " + currentScore;
     }
     else {
-        timeLeft -= 2;
+        timeLeft -= 5;
         timeEl.textContent = timeLeft + "s remaining";
     }
 
@@ -141,7 +141,7 @@ function recordScore() {
     localStorage.setItem('localScores', JSON.stringify(highScores))
     topScores()
 }
-var olEl = document.querySelector("#scoreList")
+var olEl = document.querySelector("#scoresList")
 var scoreListEl = document.querySelector("#hi-scores")
 // grab and sort local storage, create elements to house scores
 function topScores() {
