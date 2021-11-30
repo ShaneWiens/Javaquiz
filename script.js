@@ -1,3 +1,5 @@
+// Gaze upon my variable, for they are many, one might even say varied...But in all seriousness, this is the list of variable I either forsaw using or had the sanity to place them at the top as I made them
+
 var buttonEl = document.querySelector("#start-btn");
 
 var timeEl = document.querySelector("#playTimer");
@@ -15,8 +17,13 @@ var currentAnswersEl = document.querySelector("#answers");
 var currentScoreEl = document.querySelector("#playerScore")
 
 var finalScoreEl = document.querySelector("#finalUserScores")
+
 var finalUserScoreEl = document.querySelector("#finalScore")
+
 var submitScore = document.querySelector("#submit")
+
+// This is by far the largest variable I've ever done created for myself. An entire array of objects! have you ever seen anything like it?! Probably, this isn't your first rodeo
+
 var questionActive = [
     {
         question: "Which of these is not a valid data type?",
@@ -45,6 +52,7 @@ var questionActive = [
     },
 ];
 
+
 var timeLeft = 25;
 
 var currentScore = 0;
@@ -52,6 +60,7 @@ var questionIndex = 0;
 var timerInterval;
 currentScoreEl.textContent = "Current score: " + currentScore;
 
+// This is my timer, it times you. It also ask you ask a question!
 function displayTime() {
     startEl.setAttribute("class", "hide");
     questionEl.classList.remove("hide");
@@ -65,10 +74,11 @@ function displayTime() {
         }
 
     }, 1000);
-    askFirstQuestion()
+    askQuestion()
 };
 
-function askFirstQuestion() {
+// clears and creates the question card element. 
+function askQuestion() {
 
     currentQuestionEl.textContent = questionActive[questionIndex].question;
     currentAnswersEl.innerHTML = '';
@@ -87,6 +97,8 @@ function askFirstQuestion() {
     })
 }
 
+// when a user selects an answer the info is processed and if correct awarded points. If incorrect the lose time. This also increases the global question index and goes back into the question
+
 function answerClick() {
     console.log(this.value)
 
@@ -102,22 +114,21 @@ function answerClick() {
     questionIndex++;
 
 
-    // console.log(questionActive[questionIndex].correctAnswer)
-    // console.log(currentScore)
+//   if the last question was asked, the game ends, other wise ask another question
     if (questionIndex === questionActive.length) {
         currentScore = currentScore + timeLeft;
 
         endGame();
     }
     else {
-        askFirstQuestion()
+        askQuestion()
     }
 
 }
 
 
 var finalScore = 0
-
+// ends the game and changes from questions to score entry 
 function endGame() {
     finalScore = currentScore + timeLeft;
     clearInterval(timerInterval)
@@ -127,7 +138,7 @@ function endGame() {
     questionEl.classList.add("hide")
 
 }
-
+// score is recorded with initials
 function recordScore() {
     var initialsEl = document.querySelector("#initials").value;
     var highScores = JSON.parse(localStorage.getItem('localScores')) || [];
@@ -149,9 +160,9 @@ function topScores() {
     scoreListEl.classList.remove("hide")
     var highScores = JSON.parse(localStorage.getItem('localScores')) || [];
     console.log(highScores)
-    // highScores.sort(function (a, b) {
-    //     return b.score - a.score;
-    // });
+    highScores.sort(function (a, b) {
+        return b.score - a.score;
+    });
     highScores.forEach(function (score) {
 console.log(score.initials)
         //create our element
