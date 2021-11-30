@@ -1,5 +1,4 @@
-// Gaze upon my variable, for they are many, one might even say varied...But in all seriousness, this is the list of variable I either forsaw using or had the sanity to place them at the top as I made them
-
+// variables
 var buttonEl = document.querySelector("#start-btn");
 
 var timeEl = document.querySelector("#playTimer");
@@ -21,8 +20,6 @@ var finalScoreEl = document.querySelector("#finalUserScores")
 var finalUserScoreEl = document.querySelector("#finalScore")
 
 var submitScore = document.querySelector("#submit")
-
-// This is by far the largest variable I've ever done created for myself. An entire array of objects! have you ever seen anything like it?! Probably, this isn't your first rodeo
 
 var questionActive = [
     {
