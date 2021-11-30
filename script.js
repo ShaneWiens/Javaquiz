@@ -113,7 +113,6 @@ function answerClick() {
 
 //   if the last question was asked, the game ends, other wise ask another question
     if (questionIndex === questionActive.length) {
-        currentScore = currentScore + timeLeft;
 
         endGame();
     }
